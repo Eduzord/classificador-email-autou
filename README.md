@@ -1,6 +1,7 @@
 # 🤖 Classificador de E-mails com IA 📧
 
 Este projeto é uma aplicação web simples que utiliza inteligência artificial para automatizar a classificação de e-mails e gerar respostas automáticas. É uma solução para otimizar o tempo de equipes que lidam com um alto volume de correspondência diária, categorizando as mensagens como "Produtivas" ou "Improdutivas".
+Disponível online através do [Heroku](https://classificador-email-autou-f10ce2c15261.herokuapp.com)
 
 ## ✨ Funcionalidades
 
