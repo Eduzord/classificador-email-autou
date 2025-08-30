@@ -24,16 +24,18 @@ def classificar_email_e_gerar_resposta(email_content):
     Análise:
     """
     try:
+        # Envia o prompt com o conteúdo do e-mail para a API da IA
         response = model.generate_content(prompt_completo)
 
         resposta_gerada = response.text.strip()
 
+        # Verifica a resposta e classifica de acordo
         if "Produtivo" in resposta_gerada:
             categoria = "Produtivo"
         else:
             categoria = "Improdutivo"
         
-        #Extraindo a parte da resposta sugerida
+        #Extraindo e fazendo slicing da parte da resposta sugerida
         if "Resposta Automática:" in resposta_gerada:
             resposta_sugerida = resposta_gerada.split("Resposta Automática:")[1].strip()
         elif "Resposta automática:" in resposta_gerada:
@@ -67,10 +69,11 @@ def analisar_email():
     elif 'email-file' in request.files and request.files['email-file'].filename:
         email_file = request.files['email-file']
 
-        #Lê o conteúdo do arquivo.
+        #Lê o conteúdo do arquivo se for um txt.
         if email_file.filename.endswith('.txt'):
             conteudo_email = email_file.read().decode('utf-8')
         
+        #Caso seja um pdf, lê o arquivo.
         elif email_file.filename.endswith('.pdf'):
             try:
                 #Usa a classe PdfReader para ler o pdf
@@ -89,7 +92,7 @@ def analisar_email():
                 "error": "Nenhum e-mail foi fornecido para análise."
             }), 400
     
-        # Resultado de teste
+        # Cria as variaveis categoria e resposta sugerida e atribui a elas o retorno da função que classifica o e-mail.
     categoria, resposta_sugerida = classificar_email_e_gerar_resposta(conteudo_email)
     return jsonify({
         "categoria": categoria,

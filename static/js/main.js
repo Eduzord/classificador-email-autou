@@ -1,10 +1,13 @@
+// Função que faz a chamada da API
 document.getElementById('email-form').addEventListener('submit', async function(event) {
     event.preventDefault();
 
+    // Recebe os dados do formulário
     const form = event.target;
     const formData = new FormData(form);
 
     try {
+        // Envia os dados do formulário via método POST
         const response = await fetch(form.action, {
             method: 'POST',
             body: formData
@@ -14,10 +17,12 @@ document.getElementById('email-form').addEventListener('submit', async function(
             throw new Error('Erro na resposta do servidor.');
         }
 
+        // Armazena a resposta da API e seleciona os campos onde serão inseridos as informações recebidas
         const data = await response.json();
         const resultsDiv = document.getElementById('results');
         const resultContentDiv = document.getElementById('result-content');
 
+        // Injeta no HTML da página as respostas do JSON obtido pela API
         resultContentDiv.innerHTML = `
             <p><strong>Classificação:</strong> <span class="badge ${data.categoria === 'Produtivo' ? 'bg-success' : 'bg-secondary'}">${data.categoria}</span></p>
             <p><strong>Resposta Sugerida:</strong></p>
